@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  db:
+    build: ./database
+    image: postgres:13
+    ports:
+      - "5433:5432"  # Map host port 5433 to container port 5432
+    environment:
+      POSTGRES_DB: rentacar_db
+      POSTGRES_USER: user_web
+      POSTGRES_PASSWORD: sifre123
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  web:
+    build: ./backend
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./backend:/usr/src/app  # Ensure this points to the correct directory
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
