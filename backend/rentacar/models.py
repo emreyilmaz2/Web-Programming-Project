@@ -7,7 +7,6 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
-
 class Vehicle(models.Model):
     brand = models.CharField(max_length=100)
     model = models.CharField(max_length=100)
@@ -24,4 +23,3 @@ class Rental(models.Model):
     total_cost = models.DecimalField(max_digits=6, decimal_places=2)
     def __str__(self):
         return f"{self.customer} 🔑 {self.car} 📅 {self.start_date} - {self.end_date}"
-
