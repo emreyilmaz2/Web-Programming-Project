@@ -2,7 +2,6 @@ version: '3.8'
 
 services:
   db:
-    build: ./database
     image: postgres:13
     ports:
       - "5433:5432"  # Map host port 5433 to container port 5432
@@ -15,13 +14,20 @@ services:
 
   web:
     build: ./backend
-    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: sh -c "/usr/src/app/wait-for-it.sh db:5432 -- python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./backend:/usr/src/app  # Ensure this points to the correct directory
     ports:
       - "8000:8000"
     depends_on:
       - db
+
+  react-app:
+    build:
+      context: ./web_front
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
 
 volumes:
   postgres_data:
