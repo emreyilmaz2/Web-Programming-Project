@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Rental
+from .models import User, Rental,Vehicle
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -31,7 +31,19 @@ class UserSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
+class VehicleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Vehicle
+        fields = ['id', 'brand', 'model', 'year', 'daily_rental_rate']
+
 class RentalSerializer(serializers.ModelSerializer):
+    car_details = serializers.SerializerMethodField()
+
     class Meta:
         model = Rental
-        fields = ['id', 'car', 'start_date', 'end_date', 'total_cost']
+        fields = ['id', 'start_date', 'end_date', 'total_cost', 'car_details']
+
+    def get_car_details(self, obj):
+        # obj.car ile aracın detaylarına erişilir
+        vehicle = obj.car
+        return VehicleSerializer(vehicle).data

@@ -75,8 +75,8 @@ DATABASES = {
         'NAME': 'rentacar_db',
         'USER': 'user_web',
         'PASSWORD': 'sifre123',
-        'HOST': 'db',
-        'PORT': '5432',  # Use the internal container port
+        'HOST': 'db',  # Docker Compose hizmet adı
+        'PORT': '5432',
     }
 }
 
