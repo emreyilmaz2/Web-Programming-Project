@@ -60,51 +60,63 @@ def logout_view(request):
 def available_vehicles(request):
     if not request.user.is_authenticated:
         return Response({'error': 'Authentication required'}, status=status.HTTP_401_UNAUTHORIZED)
+    
     vehicles = Vehicle.objects.filter(is_available=True)
-    data = [{'id': v.id, 'brand': v.brand, 'model': v.model, 'year': v.year } for v in vehicles]
+    data = [
+        {
+            'id': v.id,
+            'brand': v.brand,
+            'model': v.model,
+            'year': v.year,
+            'owner': v.owner.id if v.owner else None  # owner alanı boşsa None olarak ayarla
+        }
+        for v in vehicles
+    ]
     return Response(data, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 def rent_vehicle(request):
     if not request.user.is_authenticated:
         return Response({'error': 'Authentication required'}, status=status.HTTP_401_UNAUTHORIZED)
+    
     vehicle_id = request.data.get('vehicle_id')
     vehicle = Vehicle.objects.filter(id=vehicle_id, is_available=True).first()
+    
     if not vehicle:
         return Response({'error': 'Vehicle not available or does not exist'}, status=status.HTTP_404_NOT_FOUND)
     
-    # Kiralama başlangıç ve bitiş tarihlerini alın
+    if vehicle.owner == request.user:
+        return Response({'error': 'You cannot rent your own vehicle'}, status=status.HTTP_400_BAD_REQUEST)
+    
     start_date = datetime.strptime(request.data.get('start_date'), '%Y-%m-%d')
     end_date = datetime.strptime(request.data.get('end_date'), '%Y-%m-%d')
     rental_days = (end_date - start_date).days
-    daily_rental_rate = 100  # Bu değeri Vehicle modelinizden uygun bir alandan almalısınız.
+    daily_rental_rate = vehicle.daily_rental_rate
     total_cost = rental_days * daily_rental_rate
-    user_id = request.user.id
-    user = User.objects.get(id=user_id)
+    
     rental = Rental(
         car=vehicle,
-        customer=user,
+        customer=request.user,
         start_date=start_date,
         end_date=end_date,
-        total_cost=total_cost  # Bu, hesaplama yapılabilir bir alana bağlı olarak ayarlanmalıdır.
+        total_cost=total_cost
     )
     vehicle.is_available = False
     rental.save()
     vehicle.save()
+    
     return Response({'message': 'Vehicle rented successfully'}, status=status.HTTP_201_CREATED)
 
 @api_view(['POST'])
 def return_vehicle(request, vehicle_id):
     try:
         vehicle = Vehicle.objects.get(id=vehicle_id)
-        # Kiralama kaydını bul ve güncelle
-        rental = Rental.objects.filter(car=vehicle, end_date__gt=timezone.now()).last()
+        rental = Rental.objects.filter(car=vehicle).last()  # En son kiralama kaydını al
         if rental:
-            rental.end_date = timezone.now()  # Kiralama süresini güncelle
-            rental.save()
+            rental.delete()  # Kiralama kaydını sil
             vehicle.is_available = True  # Aracı müsait olarak işaretle
             vehicle.save()
-            return Response({'message': 'Vehicle returned and now available'}, status=status.HTTP_200_OK)
+            return Response({'message': 'Vehicle returned and rental record deleted'}, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'No active rental found for this vehicle'}, status=status.HTTP_404_NOT_FOUND)
     except Vehicle.DoesNotExist:
@@ -130,3 +142,29 @@ def rented_vehicles(request):
     rentals = Rental.objects.filter(customer=request.user)
     serializer = RentalSerializer(rentals, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def list_vehicle(request):
+    if not request.user.is_authenticated:
+        return Response({'error': 'Authentication required'}, status=status.HTTP_401_UNAUTHORIZED)
+    
+    brand = request.data.get('brand')
+    model = request.data.get('model')
+    year = request.data.get('year')
+    daily_rental_rate = request.data.get('daily_rental_rate')
+    
+    if not all([brand, model, year, daily_rental_rate]):
+        return Response({'error': 'All fields are required'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    vehicle = Vehicle(
+        brand=brand,
+        model=model,
+        year=year,
+        daily_rental_rate=daily_rental_rate,
+        is_available=True,
+        owner=request.user  # Aracı listeleyen kullanıcıyı owner olarak kaydet
+    )
+    vehicle.save()
+    
+    return Response({'message': 'Vehicle listed successfully'}, status=status.HTTP_201_CREATED)

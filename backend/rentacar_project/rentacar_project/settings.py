@@ -73,10 +73,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'rentacar_db',
-        'USER': 'user_web',
-        'PASSWORD': 'sifre123',
-        'HOST': 'db',
-        'PORT': '5432',  # Use the internal container port
+        'USER': 'postgres',
+        'PASSWORD': '12345',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
