@@ -13,5 +13,8 @@ python /usr/src/app/add_vehicles.py
 
 echo "Initial setup completed."
 
+# Sunucuyu başlat
+python manage.py runserver 0.0.0.0:8000
+
 # Ana uygulamayı başlatın
 exec "$@"

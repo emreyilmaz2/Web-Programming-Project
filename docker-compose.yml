@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   db:
     image: postgres:13
@@ -14,7 +13,7 @@ services:
 
   web:
     build: ./backend
-    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: sh -c "/usr/src/app/wait-for-it.sh db:5432 -- sh /usr/src/app/init.sh"
     volumes:
       - ./backend:/usr/src/app  # Ensure this points to the correct directory
     ports:
