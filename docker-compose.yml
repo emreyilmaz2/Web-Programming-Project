@@ -14,7 +14,7 @@ services:
 
   web:
     build: ./backend
-    command: sh -c "/usr/src/app/wait-for-it.sh db:5432 -- python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./backend:/usr/src/app  # Ensure this points to the correct directory
     ports:
