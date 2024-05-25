@@ -3,7 +3,6 @@ from .views import register, login_view, logout_view, available_vehicles, rent_v
 from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
-
 urlpatterns = [
     path('register/', register, name='register'),
     path('login/', login_view, name='login'),
@@ -15,5 +14,4 @@ urlpatterns = [
     path('return-vehicle/<int:vehicle_id>/', return_vehicle, name='return-vehicle'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('rented_vehicles/', rented_vehicles, name='rented_vehicles'),
-
 ]
