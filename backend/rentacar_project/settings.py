@@ -73,9 +73,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'rentacar_db',
-        'USER': 'postgres',
-        'PASSWORD': '12345',
-        'HOST': 'localhost',
+        'USER': 'user_web',
+        'PASSWORD': 'sifre123',
+        'HOST': 'db',  # Docker Compose hizmet adı
         'PORT': '5432',
     }
 }

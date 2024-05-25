@@ -2,7 +2,6 @@ version: '3.8'
 
 services:
   db:
-    build: ./database
     image: postgres:13
     ports:
       - "5433:5432"  # Map host port 5433 to container port 5432
@@ -22,6 +21,13 @@ services:
       - "8000:8000"
     depends_on:
       - db
+
+  react-app:
+    build:
+      context: ./web_front
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
 
 volumes:
   postgres_data:
