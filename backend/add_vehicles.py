@@ -16,11 +16,13 @@ def add_random_vehicle():
     brand = random.choice(brands)
     model = random.choice(models)
     year = random.randint(2000, 2024)
+    daily_rental_rate = random.randint(0, 1000)
     
     Vehicle.objects.create(
         brand=brand,
         model=model,
         year=year,
+        daily_rental_rate=daily_rental_rate,
     )
 
 # 20 adet rastgele araç ekleyin
