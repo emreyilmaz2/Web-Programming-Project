@@ -1,0 +1,126 @@
+/* src/Pages/homePage.css */
+
+.vehicle-container {
+  padding: 20px;
+  background-color: #f0f2f5;
+}
+
+.vehicle-title {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.vehicle-error-message {
+  color: red;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.vehicle-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.vehicle-card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 300px;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.vehicle-card:hover {
+  transform: scale(1.05);
+}
+
+.vehicle-card-logo {
+  width: 100%;
+  height: 150px;
+  object-fit: contain;
+  background-color: #f9f9f9;
+  padding: 10px;
+}
+
+.vehicle-card-details {
+  padding: 20px;
+}
+
+.vehicle-card-details h2 {
+  margin: 10px 0;
+  color: #333;
+}
+
+.vehicle-card-details p {
+  color: #777;
+  margin: 5px 0;
+}
+
+.vehicle-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.2s;
+}
+
+.vehicle-button:hover {
+  background-color: #0056b3;
+}
+
+.vehicle-button.owner {
+  background-color: #dc3545;
+  cursor: not-allowed;
+}
+
+.vehicle-button.owner:hover {
+  background-color: #c82333;
+}
+
+.rent-form-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  text-align: center;
+}
+
+.vehicle-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.vehicle-form-group {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.vehicle-form-label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.vehicle-form-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.cancel-button {
+  background-color: #dc3545;
+}
+
+.cancel-button:hover {
+  background-color: #c82333;
+}

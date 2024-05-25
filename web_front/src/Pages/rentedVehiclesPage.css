@@ -1,0 +1,62 @@
+/* src/Pages/rentedVehiclesPage.css */
+
+.rented-vehicles-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.rented-vehicles-title {
+  text-align: center;
+  color: #333;
+}
+
+.rented-vehicles-list {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Merkeze hizalama */
+}
+
+.rented-vehicle-item {
+  padding: 20px;
+  margin: 10px 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* İçerikleri merkeze hizala */
+  width: 100%; /* Tam genişlik */
+}
+
+.rented-vehicle-item img {
+  width: 100px; /* Logo genişliği */
+  height: 100px; /* Logo yüksekliği */
+  margin-bottom: 10px; /* Logodan sonra boşluk */
+}
+
+.return-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.2s;
+}
+
+.return-button:hover {
+  background-color: #c82333;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: 20px;
+}
