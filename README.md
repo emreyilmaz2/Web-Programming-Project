@@ -3,6 +3,9 @@
 ## Proje Özeti
 Tasarladığımız Araç Kiralama sitesi, kullanıcıların kolayca araç kiralayabileceği modern bir platform sunmaktadır. UI Framework kullanılarak tasarlanan kullanıcı arayüzü, kullanıcıların araçları kolayca tarayıp rezervasyon yapmalarını sağlar. OOP prensiplerine dayalı iş katmanı, veri katmanında ORM ve migrations kullanarak veritabanı işlemlerini yönetir. Ayrıca, web servisleri ile farklı bileşenler arasında iletişim kurarken, yetkilendirme uygulaması kullanıcıların güvenliği ve gizliliği için entegre edilmiştir. Bu sayede, kullanıcılar güvenilir bir platformda araç kiralama işlemlerini rahatlıkla gerçekleştirebilirler.
 
+## Proje Mimarisi
+<img src="https://github.com/emreyilmaz2/Web-Programming-Project/assets/102359028/4007efaa-ba7a-4131-ab30-1051ba1bdd44" alt="N-Layer Architecture Diagram" width="700"/>
+
 ## Teknolojiler
 - **Presentation Layer**: Bootstrap ve React
 - **Business Layer**: OOP Bileşenleri (Sınıflar, Metodlar, Arayüzler vb.)
